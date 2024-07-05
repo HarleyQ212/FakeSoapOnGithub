@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://tempuri.org/" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://tempuri.org/">
+    
+    <!-- Types -->
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://tempuri.org/">
+            <xsd:element name="Add">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="intA" type="xsd:int"/>
+                        <xsd:element name="intB" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AddResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="AddResult" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Subtract">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="intA" type="xsd:int"/>
+                        <xsd:element name="intB" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SubtractResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="SubtractResult" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Multiply">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="intA" type="xsd:int"/>
+                        <xsd:element name="intB" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="MultiplyResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="MultiplyResult" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Divide">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="intA" type="xsd:int"/>
+                        <xsd:element name="intB" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DivideResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="DivideResult" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AuthHeader">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Username" type="xsd:string"/>
+                        <xsd:element name="Password" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <!-- Messages -->
+    <wsdl:message name="AddSoapIn">
+        <wsdl:part name="parameters" element="tns:Add"/>
+    </wsdl:message>
+    <wsdl:message name="AddSoapOut">
+        <wsdl:part name="parameters" element="tns:AddResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SubtractSoapIn">
+        <wsdl:part name="parameters" element="tns:Subtract"/>
+    </wsdl:message>
+    <wsdl:message name="SubtractSoapOut">
+        <wsdl:part name="parameters" element="tns:SubtractResponse"/>
+    </wsdl:message>
+    <wsdl:message name="MultiplySoapIn">
+        <wsdl:part name="parameters" element="tns:Multiply"/>
+    </wsdl:message>
+    <wsdl:message name="MultiplySoapOut">
+        <wsdl:part name="parameters" element="tns:MultiplyResponse"/>
+    </wsdl:message>
+    <wsdl:message name="DivideSoapIn">
+        <wsdl:part name="parameters" element="tns:Divide"/>
+    </wsdl:message>
+    <wsdl:message name="DivideSoapOut">
+        <wsdl:part name="parameters" element="tns:DivideResponse"/>
+    </wsdl:message>
+    <wsdl:message name="AuthHeader">
+        <wsdl:part name="auth" element="tns:AuthHeader"/>
+    </wsdl:message>
+
+    <!-- PortType -->
+    <wsdl:portType name="CalculatorSoap">
+        <wsdl:operation name="Add">
+            <wsdl:input message="tns:AddSoapIn"/>
+            <wsdl:output message="tns:AddSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="Subtract">
+            <wsdl:input message="tns:SubtractSoapIn"/>
+            <wsdl:output message="tns:SubtractSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="Multiply">
+            <wsdl:input message="tns:MultiplySoapIn"/>
+            <wsdl:output message="tns:MultiplySoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="Divide">
+            <wsdl:input message="tns:DivideSoapIn"/>
+            <wsdl:output message="tns:DivideSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!-- Binding -->
+    <wsdl:binding name="CalculatorSoapBinding" type="tns:CalculatorSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Add">
+            <soap:operation soapAction="http://tempuri.org/Add" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header message="tns:AuthHeader" part="auth" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Subtract">
+            <soap:operation soapAction="http://tempuri.org/Subtract" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header message="tns:AuthHeader" part="auth" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Multiply">
+            <soap:operation soapAction="http://tempuri.org/Multiply" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header message="tns:AuthHeader" part="auth" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Divide">
+            <soap:operation soapAction="http://tempuri.org/Divide" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header message="tns:AuthHeader" part="auth" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <!-- Service -->
+    <wsdl:service name="CalculatorService">
+        <wsdl:port name="CalculatorSoap" binding="tns:CalculatorSoapBinding">
+            <soap:address location="http://yourdomain.com/calculator/CalculatorService.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>
